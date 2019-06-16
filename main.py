@@ -17,6 +17,8 @@ import pandas as pd
 import os
 from keras.applications.vgg19 import preprocess_input
 
+os.environ['QT_QPA_PLATFORM'] = 'offscreen'
+
 matchers = listdir(str(conf.dir + 'ExperimentData/'))
 print('found ', len(matchers), ' matchers')
 matchers_ids = dict(enumerate(matchers))
