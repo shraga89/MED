@@ -243,8 +243,8 @@ for _, testset in kfold.split(matchers):
         features[matcher[0]] = np.append(curr_feat, temp)
 
     X = E.features2pandas(features, True)
-    x_test = np.array(X[X['matcher'].isin(test)].drop(columns=['matcher']))
-    x_train = np.array(X[~X['matcher'].isin(test)].drop(columns=['matcher']))
+    x_test = np.array(X[X['matcher'].isin(test)].drop('matcher', axis=1))
+    x_train = np.array(X[~X['matcher'].isin(test)].drop('matcher', axis=1))
     predictions = Y[Y['matcher'].isin(test)][['matcher', 'P_bin', 'R_bin', 'Res_bin', 'Cal_bin']]
 
     y_train = np.array(Y[~Y['matcher'].isin(test)]['P_bin'])
