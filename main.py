@@ -94,7 +94,7 @@ for _, testset in kfold.split(matchers):
     K.get_session().close()
     K.set_session(tf.Session())
     K.get_session().run(tf.global_variables_initializer())
-    # K.clear_session()
+    K.clear_session()
     consensus = U.bulid_consensus(matches_train)
     lstm_p = U.build_lstm_regg(64)
     lstm_r = U.build_lstm_regg(64)
