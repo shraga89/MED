@@ -18,6 +18,11 @@ import os
 from keras.applications.vgg19 import preprocess_input
 
 os.environ['QT_QPA_PLATFORM'] = 'offscreen'
+config = tf.ConfigProto(device_count={'GPU': 2, 'CPU': 28})
+config.gpu_options.allow_growth = True
+config.gpu_options.per_process_gpu_memory_fraction = 0.95
+sess = tf.Session(config=config)
+keras.backend.set_session(sess)
 
 matchers = listdir(str(conf.dir + 'ExperimentData/'))
 print('found ', len(matchers), ' matchers')
