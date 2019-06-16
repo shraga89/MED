@@ -15,7 +15,6 @@ from keras import backend as K
 
 
 vgg19 = VGG19(weights='imagenet', include_top=False, input_shape=(37, 45, 3), classes=2)
-graph = tf.get_default_graph()
 
 
 def build_lstm_classify(first):
@@ -41,7 +40,7 @@ def build_lstm_regg(first):
 
 
 def build_pretrained_cnn():
-    global graph
+    graph = tf.get_default_graph()
     with graph.as_default():
         for layer in vgg19.layers[:5]:
             layer.trainable = False

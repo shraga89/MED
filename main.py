@@ -101,7 +101,7 @@ for _, testset in kfold.split(matchers):
     K.set_session(tf.Session())
     K.get_session().run(tf.global_variables_initializer())
     K.clear_session()
-    tf.reset_default_graph()
+    # tf.reset_default_graph()
     consensus = U.bulid_consensus(matches_train)
     lstm_p = U.build_lstm_regg(64)
     lstm_r = U.build_lstm_regg(64)
