@@ -28,6 +28,7 @@ class mouseHandler:
             self.processMouseData()
             self.list2dict()
         else:
+            self.mouseData = {}
             self.newMouseData = M
             self.list2dict()
 
