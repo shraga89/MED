@@ -13,8 +13,15 @@ from keras.preprocessing.image import load_img
 import tensorflow as tf
 from keras import backend as K
 
-
 vgg19 = VGG19(weights='imagenet', include_top=False, input_shape=(37, 45, 3), classes=2)
+graph = tf.get_default_graph()
+
+
+def load_vgg():
+    global vgg19
+    vgg19 = VGG19(weights='imagenet', include_top=False, input_shape=(37, 45, 3), classes=2)
+    global graph
+    graph = tf.get_default_graph()
 
 
 def build_lstm_classify(first):
@@ -40,7 +47,7 @@ def build_lstm_regg(first):
 
 
 def build_pretrained_cnn():
-    graph = tf.get_default_graph()
+    global graph
     with graph.as_default():
         for layer in vgg19.layers[:5]:
             layer.trainable = False

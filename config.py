@@ -1,5 +1,5 @@
 dir = '../'
-epochs = 10
+epochs = 5
 # testset_size = 2
 folds = 5
 # folds = 2
