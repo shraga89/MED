@@ -56,7 +56,7 @@ def build_pretrained_cnn():
 
         model = Model(inputs=vgg19.input, outputs=predictions)
         model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=["accuracy"])
-    print(model.summary())
+    # print(model.summary())
     return model
 
 
