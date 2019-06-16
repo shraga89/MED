@@ -77,7 +77,6 @@ class mouseHandler:
 
     def exportMouseData(self, method, save_heatmaps=False):
         # USE THE LIST!!
-        plt.clf()
         x = []
         y = []
         weights = []
@@ -100,6 +99,7 @@ class mouseHandler:
         heatmap, _, _ = np.histogram2d(x, y, bins=(xedges, yedges))
         heatmap = heatmap.T
         if save_heatmaps:
+            plt.clf()
             map_img = plt.imread(self.dir + 'screen.jpg')
             hmax = sns.heatmap(heatmap,
                                cmap='Reds',
