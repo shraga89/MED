@@ -19,6 +19,7 @@ import os
 from keras.applications.vgg19 import preprocess_input
 
 os.environ['QT_QPA_PLATFORM'] = 'offscreen'
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 config = tf.ConfigProto(device_count={'GPU': 2, 'CPU': 28})
 config.gpu_options.allow_growth = True
 config.gpu_options.per_process_gpu_memory_fraction = 0.95
@@ -34,6 +35,8 @@ matchers_ids = dict(enumerate(matchers))
 #     test.exportMouseData('RMouse')
 #     test.exportMouseData('WMouse')
 #     test.exportMouseData('Move')
+
+# SHAP to analyze features
 
 evaluator = E.Evaluator()
 quality = {}
@@ -69,7 +72,7 @@ for matcher in matchers:
     temp = Hmatcher.extract_behavioural_features()
     features[matcher] = np.append(curr_feat, temp)
     matches[matcher] = match
-    for i in range(5, len(conf_seqs[matcher])):
+    for i in range(conf.num_subs, len(conf_seqs[matcher])):
         submatchers = Hmatcher.split2ns(i, matcher)
         submouses = mouse.split2ns(submatchers)
         for sub in submatchers:
