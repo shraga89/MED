@@ -72,7 +72,7 @@ for matcher in matchers:
     temp = Hmatcher.extract_behavioural_features()
     features[matcher] = np.append(curr_feat, temp)
     matches[matcher] = match
-    for i in range(conf.num_subs, len(conf_seqs[matcher])):
+    for i in range(conf.num_subs, min(len(conf_seqs[matcher]), conf.max_subs)):
         submatchers = Hmatcher.split2ns(i, matcher)
         submouses = mouse.split2ns(submatchers)
         for sub in submatchers:

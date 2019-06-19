@@ -4,3 +4,4 @@ epochs = 5
 folds = 5
 # folds = 2
 num_subs = 20
+max_subs = 50
