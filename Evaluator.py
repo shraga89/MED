@@ -3,6 +3,7 @@ import numpy as np
 import config as conf
 from scipy import stats
 from itertools import permutations, combinations
+from sklearn.metrics import accuracy_score
 
 def quality2pandas(quality, export=False):
     df = pd.DataFrame(columns=['matcher', 'P', 'R', 'Res', 'Cal'])
@@ -43,6 +44,23 @@ def features2pandas(features, export=False):
     if export:
         df.sort_values(by='matcher', ascending=True).to_csv('./features.csv', index=False)
     return df
+
+
+def eval_model(pred, real):
+    return accuracy_score(real, pred)
+
+
+def summerize_results(res, clfs):
+    eval = pd.DataFrame(columns=['Q', 'Clf', 'Acc'])
+    i = 1
+    for clf,_ in clfs:
+        for q in ['P_bin', 'R_bin', 'Res_bin', 'Cal_bin']:
+            pred = res[q+'_'+clf].copy()
+            real = res[q]
+            acc = accuracy_score(real, pred)
+            eval.loc[i] = np.array([q, clf, acc])
+            i += 1
+    return eval
 
 
 def goodman_kruskal_gamma(m, n):

@@ -3,5 +3,5 @@ epochs = 5
 # testset_size = 2
 folds = 5
 # folds = 2
-num_subs = 20
-max_subs = 50
+num_subs = 30
+max_subs = 70
