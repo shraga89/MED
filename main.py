@@ -234,24 +234,24 @@ for _, testset in kfold.split(matchers):
         # temp += [float(np.argmax(cnn_p_moves.predict(x))), float(np.argmax(cnn_r_moves.predict(x))),
         #         float(np.argmax(cnn_res_moves.predict(x))), float(np.argmax(cnn_cal_moves.predict(x)))]
         print(cnn_p_moves.predict(x))
-        temp += [float(cnn_p_moves.predict(x)[0][1]), float(cnn_r_moves.predict(x)[0][1]),
-                float(cnn_res_moves.predict(x)[0][1]), float(cnn_cal_moves.predict(x)[0][1])]
+        temp += [float(cnn_p_moves.predict(x)[0]), float(cnn_r_moves.predict(x)[0]),
+                float(cnn_res_moves.predict(x)[0]), float(cnn_cal_moves.predict(x)[0])]
 
 
         # LMouse:
         x = preprocess_input(np.array([heatmaps['LMouse'][matcher[0]]]))
-        temp += [float(cnn_p_LMouse.predict(x)[0][1]), float(cnn_r_LMouse.predict(x)[0][1]),
-                float(cnn_res_LMouse.predict(x)[0][1]), float(cnn_cal_LMouse.predict(x)[0][1])]
+        temp += [float(cnn_p_LMouse.predict(x)[0]), float(cnn_r_LMouse.predict(x)[0]),
+                float(cnn_res_LMouse.predict(x)[0]), float(cnn_cal_LMouse.predict(x)[0])]
 
         # WMouse:
         x = preprocess_input(np.array([heatmaps['WMouse'][matcher[0]]]))
-        temp += [float(cnn_p_WMouse.predict(x)[0][1]), float(cnn_r_WMouse.predict(x)[0][1]),
-                float(cnn_res_WMouse.predict(x)[0][1]), float(cnn_cal_WMouse.predict(x)[0][1])]
+        temp += [float(cnn_p_WMouse.predict(x)[0]), float(cnn_r_WMouse.predict(x)[0]),
+                float(cnn_res_WMouse.predict(x)[0]), float(cnn_cal_WMouse.predict(x)[0])]
 
         # RMouse:
         x = preprocess_input(np.array([heatmaps['RMouse'][matcher[0]]]))
-        temp += [float(cnn_p_RMouse.predict(x)[0][1]), float(cnn_r_RMouse.predict(x)[0][1]),
-                float(cnn_res_RMouse.predict(x)[0][1]), float(cnn_cal_RMouse.predict(x)[0][1])]
+        temp += [float(cnn_p_RMouse.predict(x)[0]), float(cnn_r_RMouse.predict(x)[0]),
+                float(cnn_res_RMouse.predict(x)[0]), float(cnn_cal_RMouse.predict(x)[0])]
 
         features[matcher[0]] = np.append(curr_feat, temp)
 

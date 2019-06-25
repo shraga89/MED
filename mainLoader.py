@@ -1,3 +1,5 @@
+# pip install shap
+# pip install --upgrade scikit-image
 import pandas as pd
 from sklearn.model_selection import KFold
 from sklearn.svm import SVC
@@ -18,7 +20,6 @@ from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
 import matplotlib.pyplot as plt
-from sklearn.ensemble import ExtraTreesClassifier
 
 feature_mapping = dict(zip(range(0, 99), ['Matrix_avg', 'Matrix_max', 'Matrix_std', 'Matrix_mpe', 'Matrix_mcd',
                                           'Matrix_bbm', 'Matrix_bpm', 'Matrix_lmm', 'Matrix_dom', 'Matrix_pca1',
@@ -97,6 +98,8 @@ for _, test in kfold.split(matchers):
             predictions['P_bin_' + clf_name] = clf.predict(x_test)
         else:
             predictions['P_bin_' + clf_name] = len(x_test) * [yP_train[0], ]
+        U.check_importance(x_test, clf)
+        exit()
 
         if U.check_labels(yR_train):
             clf.fit(X=x_train, y=yR_train)
