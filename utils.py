@@ -12,7 +12,7 @@ from keras import optimizers
 from keras.preprocessing.image import load_img
 import tensorflow as tf
 from keras import backend as K
-import shap
+# import shap
 import matplotlib.pyplot as plt
 
 vgg19 = VGG19(weights='imagenet', include_top=False, input_shape=(37, 45, 3), classes=2)
