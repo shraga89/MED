@@ -89,7 +89,6 @@ for matcher in matchers:
     #         features[sub] = np.append(curr_feat, temp)
     #         quality[sub] = evaluator.evaluate(match)
 Y = E.quality2pandas(quality, True)
-exit()
 i = 1
 ts = time.time()
 st = datetime.datetime.fromtimestamp(ts).strftime('%d_%m_%Y_%H_%M')
