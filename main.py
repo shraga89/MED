@@ -72,24 +72,24 @@ for matcher in matchers:
     temp = Hmatcher.extract_behavioural_features()
     features[matcher] = np.append(curr_feat, temp)
     matches[matcher] = match
-    for i in range(conf.num_subs, min(len(conf_seqs[matcher]), conf.max_subs), 10):
-        submatchers = Hmatcher.split2ns(i, matcher)
-        submouses = mouse.split2ns(submatchers)
-        for sub in submatchers:
-            match = submatchers[sub].getMatch()
-            match_seqs[sub], conf_seqs[sub], time_seqs[sub] = submatchers[sub].getSeqs()
-            features[sub] = MF.extractPreds(evaluator.getMatrix4Match(match))
-            for k in heatmaps:
-                heatmaps[k][sub] = submouses[sub].exportMouseData(k)
-            curr_feat = features[sub]
-            temp = submouses[sub].extract_mouse_features()
-            features[sub] = np.append(curr_feat, temp)
-            curr_feat = features[matcher]
-            temp = submatchers[sub].extract_behavioural_features()
-            features[sub] = np.append(curr_feat, temp)
-            quality[sub] = evaluator.evaluate(match)
+    # for i in range(conf.num_subs, min(len(conf_seqs[matcher]), conf.max_subs), conf.jumps):
+    #     submatchers = Hmatcher.split2ns(i, matcher)
+    #     submouses = mouse.split2ns(submatchers)
+    #     for sub in submatchers:
+    #         match = submatchers[sub].getMatch()
+    #         match_seqs[sub], conf_seqs[sub], time_seqs[sub] = submatchers[sub].getSeqs()
+    #         features[sub] = MF.extractPreds(evaluator.getMatrix4Match(match))
+    #         for k in heatmaps:
+    #             heatmaps[k][sub] = submouses[sub].exportMouseData(k)
+    #         curr_feat = features[sub]
+    #         temp = submouses[sub].extract_mouse_features()
+    #         features[sub] = np.append(curr_feat, temp)
+    #         curr_feat = features[matcher]
+    #         temp = submatchers[sub].extract_behavioural_features()
+    #         features[sub] = np.append(curr_feat, temp)
+    #         quality[sub] = evaluator.evaluate(match)
 Y = E.quality2pandas(quality, True)
-
+exit()
 i = 1
 ts = time.time()
 st = datetime.datetime.fromtimestamp(ts).strftime('%d_%m_%Y_%H_%M')
@@ -232,23 +232,27 @@ for _, testset in kfold.split(matchers):
         # CNN:
         # MOVE:
         x = preprocess_input(np.array([heatmaps['Move'][matcher[0]]]))
-        temp += [float(np.argmax(cnn_p_moves.predict(x))), float(np.argmax(cnn_r_moves.predict(x))),
-                float(np.argmax(cnn_res_moves.predict(x))), float(np.argmax(cnn_cal_moves.predict(x)))]
+        # temp += [float(np.argmax(cnn_p_moves.predict(x))), float(np.argmax(cnn_r_moves.predict(x))),
+        #         float(np.argmax(cnn_res_moves.predict(x))), float(np.argmax(cnn_cal_moves.predict(x)))]
+        print(cnn_p_moves.predict(x))
+        temp += [float(cnn_p_moves.predict(x)[1]), float(cnn_r_moves.predict(x)[1]),
+                float(cnn_res_moves.predict(x)[1]), float(cnn_cal_moves.predict(x)[1])]
+
 
         # LMouse:
         x = preprocess_input(np.array([heatmaps['LMouse'][matcher[0]]]))
-        temp += [float(np.argmax(cnn_p_LMouse.predict(x))), float(np.argmax(cnn_r_LMouse.predict(x))),
-                float(np.argmax(cnn_res_LMouse.predict(x))), float(np.argmax(cnn_cal_LMouse.predict(x)))]
+        temp += [float(cnn_p_LMouse.predict(x)[1]), float(cnn_r_LMouse.predict(x)[1]),
+                float(cnn_res_LMouse.predict(x)[1]), float(cnn_cal_LMouse.predict(x)[1])]
 
         # WMouse:
         x = preprocess_input(np.array([heatmaps['WMouse'][matcher[0]]]))
-        temp += [float(np.argmax(cnn_p_WMouse.predict(x))), float(np.argmax(cnn_r_WMouse.predict(x))),
-                float(np.argmax(cnn_res_WMouse.predict(x))), float(np.argmax(cnn_cal_WMouse.predict(x)))]
+        temp += [float(cnn_p_WMouse.predict(x)[1]), float(cnn_r_WMouse.predict(x)[1]),
+                float(cnn_res_WMouse.predict(x)[1]), float(cnn_cal_WMouse.predict(x)[1])]
 
         # RMouse:
         x = preprocess_input(np.array([heatmaps['RMouse'][matcher[0]]]))
-        temp += [float(np.argmax(cnn_p_RMouse.predict(x))), float(np.argmax(cnn_r_RMouse.predict(x))),
-                float(np.argmax(cnn_res_RMouse.predict(x))), float(np.argmax(cnn_cal_RMouse.predict(x)))]
+        temp += [float(cnn_p_RMouse.predict(x)[0]), float(cnn_r_RMouse.predict(x)[0]),
+                float(cnn_res_RMouse.predict(x)[0]), float(cnn_cal_RMouse.predict(x)[0])]
 
         features[matcher[0]] = np.append(curr_feat, temp)
 

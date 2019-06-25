@@ -20,7 +20,7 @@ from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
 import matplotlib.pyplot as plt
 from sklearn.ensemble import ExtraTreesClassifier
 
-feature_mapping = dict(zip(range(0, 99), ['Matrix_avg', 'Matrix_max', 'Matrix__std', 'Matrix_mpe', 'Matrix_mcd',
+feature_mapping = dict(zip(range(0, 99), ['Matrix_avg', 'Matrix_max', 'Matrix_std', 'Matrix_mpe', 'Matrix_mcd',
                                           'Matrix_bbm', 'Matrix_bpm', 'Matrix_lmm', 'Matrix_dom', 'Matrix_pca1',
                                           'Matrix_pca2', 'Matrix_pcaSum', 'Matrix_pcaEntropy', 'Matrix_norms1',
                                           'Matrix_norms2', 'Matrix_normsF', 'Matrix_normsInf', 'Mouse_totalLength',
@@ -96,25 +96,25 @@ for _, test in kfold.split(matchers):
             clf.fit(X=x_train, y=yP_train)
             predictions['P_bin_' + clf_name] = clf.predict(x_test)
         else:
-            predictions['P_bin_' + clf_name] = len(x_test)*[yP_train[0], ]
+            predictions['P_bin_' + clf_name] = len(x_test) * [yP_train[0], ]
 
         if U.check_labels(yR_train):
             clf.fit(X=x_train, y=yR_train)
             predictions['R_bin_' + clf_name] = clf.predict(x_test)
         else:
-            predictions['R_bin_' + clf_name] = len(x_test)*[yR_train[0], ]
+            predictions['R_bin_' + clf_name] = len(x_test) * [yR_train[0], ]
 
         if U.check_labels(yRes_train):
             clf.fit(X=x_train, y=yRes_train)
             predictions['Res_bin_' + clf_name] = clf.predict(x_test)
         else:
-            predictions['Res_bin_' + clf_name] = len(x_test)*[yRes_train[0], ]
+            predictions['Res_bin_' + clf_name] = len(x_test) * [yRes_train[0], ]
 
         if U.check_labels(yCal_train):
             clf.fit(X=x_train, y=yCal_train)
             predictions['Cal_bin_' + clf_name] = clf.predict(x_test)
         else:
-            predictions['Cal_bin_' + clf_name] = len(x_test)*[yRes_train[0], ]
+            predictions['Cal_bin_' + clf_name] = len(x_test) * [yRes_train[0], ]
     res = pd.concat([res, predictions], ignore_index=True).drop_duplicates().reset_index(drop=True)
     i += 1
 
@@ -132,7 +132,7 @@ for q in ['P_bin', 'R_bin', 'Res_bin', 'Cal_bin']:
     feat_ablation.loc[i] = np.array([best_clf, best_clf_acc])
     i += 1
     for subset_prefix in ['Matrix', 'Mouse', 'Behavioural', 'Sequential', 'Spatial']:
-        print('Removing ' + subset_prefix + 'features')
+        print('Removing ' + subset_prefix + ' features')
         preds = []
         reals = []
         features2drop = list(X.columns)[feature_positions[subset_prefix][0]: feature_positions[subset_prefix][1]]
@@ -148,10 +148,32 @@ for q in ['P_bin', 'R_bin', 'Res_bin', 'Cal_bin']:
                 clf.fit(X=x_train, y=y_train)
                 pred = clf.predict(x_test)
             else:
-                pred = len(x_test)*[y_train[0], ]
+                pred = len(x_test) * [y_train[0], ]
             preds += list(pred)
             reals += list(y_test)
-        feat_ablation.loc[i] = np.array([best_clf + '_' + subset_prefix, E.eval_model(preds, reals)])
+        feat_ablation.loc[i] = np.array([best_clf + '_without_' + subset_prefix, E.eval_model(preds, reals)])
+        i += 1
+    for subset_prefix in ['Matrix', 'Mouse', 'Behavioural', 'Sequential', 'Spatial']:
+        print('Maintaining only ' + subset_prefix + ' features')
+        preds = []
+        reals = []
+        features2maintain = ['matcher', ] + list(X.columns)[feature_positions[subset_prefix][0]:
+                                                            feature_positions[subset_prefix][1]]
+        subX = X.loc[:, features2maintain].copy()
+        for _, test in kfold.split(matchers):
+            testset = [matchers_ids[m] for m in test]
+            x_test = np.array(subX[subX['matcher'].isin(testset)].drop('matcher', axis=1))
+            x_train = np.array(subX[~subX['matcher'].isin(testset)].drop('matcher', axis=1))
+            y_train = np.array(Y[~Y['matcher'].isin(testset)][q])
+            y_test = np.array(Y[Y['matcher'].isin(testset)][q])
+            if U.check_labels(y_train):
+                clf.fit(X=x_train, y=y_train)
+                pred = clf.predict(x_test)
+            else:
+                pred = len(x_test) * [y_train[0], ]
+            preds += list(pred)
+            reals += list(y_test)
+        feat_ablation.loc[i] = np.array([best_clf + '_only_' + subset_prefix, E.eval_model(preds, reals)])
         i += 1
     feat_ablation.sort_values(by=['Acc'],
                               ascending=True).to_csv(folder + '/' + q + '_ablation_evaluation.csv', index=False)

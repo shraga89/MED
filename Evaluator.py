@@ -5,7 +5,9 @@ from scipy import stats
 from itertools import permutations, combinations
 from sklearn.metrics import accuracy_score
 
+
 def quality2pandas(quality, export=False):
+    global_Calibration = 0.748 - 0.542
     df = pd.DataFrame(columns=['matcher', 'P', 'R', 'Res', 'Cal'])
     i = 1
     for m in quality:
@@ -16,11 +18,11 @@ def quality2pandas(quality, export=False):
     df['R_bin'] = 0.0
     df.loc[pd.to_numeric(df['R']) > 0.5, 'R_bin'] = 1.0
     df['Res_bin'] = 0.0
-    # THINK ABOUNT THE VALUES!
+    # THINK ABOUT THE VALUES!
     df.loc[pd.to_numeric(df['Res']).abs() > 0.5, 'Res_bin'] = 1.0
     df['Cal_bin'] = 0.0
-    # THINK ABOUNT THE VALUES!
-    df.loc[pd.to_numeric(df['Cal']).abs() < 0.3, 'Cal_bin'] = 1.0
+    # THINK ABOUT THE VALUES!
+    df.loc[pd.to_numeric(df['Cal']).abs() < global_Calibration, 'Cal_bin'] = 1.0
     # Pairs
     bins = ['P_bin', 'R_bin', 'Res_bin', 'Cal_bin']
     for i in range(2, len(bins)+1):
@@ -161,6 +163,9 @@ class Evaluator:
         if P == 0.0 or R == 0.0:
             return 0.0, 0.0, 0.0, 0.0
         # F = (2 * P * R) / (P + R)
-        return P, R, Res[0], Cal
+        res_val = Res[0]
+        if Res[1] < 0.1:
+            res_val = 0.0
+        return P, R, res_val, Cal
 
 
