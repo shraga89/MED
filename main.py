@@ -179,31 +179,35 @@ for _, testset in kfold.split(matchers):
         # CNN:
         # MOVE:
         x = preprocess_input(np.array([heatmaps['Move'][matcher[0]]]))
-        cnn_p_moves.fit(x, y_p_bin, epochs=conf.epochs)
-        cnn_r_moves.fit(x, y_r_bin, epochs=conf.epochs)
-        cnn_res_moves.fit(x, y_res_bin, epochs=conf.epochs)
-        cnn_cal_moves.fit(x, y_cal_bin, epochs=conf.epochs)
+        # cnn_p_moves.fit(x, y_p_bin, epochs=conf.epochs)
+        # cnn_r_moves.fit(x, y_r_bin, epochs=conf.epochs)
+        # cnn_res_moves.fit(x, y_res_bin, epochs=conf.epochs)
+        # cnn_cal_moves.fit(x, y_cal_bin, epochs=conf.epochs)
+        cnn_p_moves.fit(x, y_p, epochs=conf.epochs)
+        cnn_r_moves.fit(x, y_r, epochs=conf.epochs)
+        cnn_res_moves.fit(x, y_res, epochs=conf.epochs)
+        cnn_cal_moves.fit(x, y_cal, epochs=conf.epochs)
 
         # LMouse:
         x = preprocess_input(np.array([heatmaps['LMouse'][matcher[0]]]))
-        cnn_p_LMouse.fit(x, y_p_bin, epochs=conf.epochs)
-        cnn_r_LMouse.fit(x, y_r_bin, epochs=conf.epochs)
-        cnn_res_LMouse.fit(x, y_res_bin, epochs=conf.epochs)
-        cnn_cal_LMouse.fit(x, y_cal_bin, epochs=conf.epochs)
+        cnn_p_LMouse.fit(x, y_p, epochs=conf.epochs)
+        cnn_r_LMouse.fit(x, y_r, epochs=conf.epochs)
+        cnn_res_LMouse.fit(x, y_res, epochs=conf.epochs)
+        cnn_cal_LMouse.fit(x, y_cal, epochs=conf.epochs)
 
         # WMouse:
         x = preprocess_input(np.array([heatmaps['WMouse'][matcher[0]]]))
-        cnn_p_WMouse.fit(x, y_p_bin, epochs=conf.epochs)
-        cnn_r_WMouse.fit(x, y_r_bin, epochs=conf.epochs)
-        cnn_res_WMouse.fit(x, y_res_bin, epochs=conf.epochs)
-        cnn_cal_WMouse.fit(x, y_cal_bin, epochs=conf.epochs)
+        cnn_p_WMouse.fit(x, y_p, epochs=conf.epochs)
+        cnn_r_WMouse.fit(x, y_r, epochs=conf.epochs)
+        cnn_res_WMouse.fit(x, y_res, epochs=conf.epochs)
+        cnn_cal_WMouse.fit(x, y_cal, epochs=conf.epochs)
 
         # RMouse:
         x = preprocess_input(np.array([heatmaps['RMouse'][matcher[0]]]))
-        cnn_p_RMouse.fit(x, y_p_bin, epochs=conf.epochs)
-        cnn_r_RMouse.fit(x, y_r_bin, epochs=conf.epochs)
-        cnn_res_RMouse.fit(x, y_res_bin, epochs=conf.epochs)
-        cnn_cal_RMouse.fit(x, y_cal_bin, epochs=conf.epochs)
+        cnn_p_RMouse.fit(x, y_p, epochs=conf.epochs)
+        cnn_r_RMouse.fit(x, y_r, epochs=conf.epochs)
+        cnn_res_RMouse.fit(x, y_res, epochs=conf.epochs)
+        cnn_cal_RMouse.fit(x, y_cal, epochs=conf.epochs)
 
     # TEST:
     for matcher in np.array(Y[:])[:].copy():
