@@ -175,7 +175,6 @@ for _, testset in kfold.split(matchers):
         lstm_cal_cons.fit(x, y_cal, epochs=conf.epochs)
 
 
-# ADD CONDITION IS REGULAR MATCHER!
         # CNN:
         # MOVE:
         x = preprocess_input(np.array([heatmaps['Move'][matcher[0]]]))

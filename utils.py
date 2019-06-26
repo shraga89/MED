@@ -61,9 +61,10 @@ def build_pretrained_cnn():
         x = Dropout(0.5)(x)
         x = Dense(1024, activation="relu")(x)
         # predictions = Dense(2, activation="softmax")(x)
-        predictions = Dense(1, activation='relu')(x)
+        predictions = Dense(1, activation='sigmoid')(x)
         model = Model(inputs=vgg19.input, outputs=predictions)
-        model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=["accuracy"])
+        # model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=["accuracy"])
+        model.compile(loss='mean_squared_error', optimizer='adam', metrics=["accuracy"])
     # print(model.summary())
     return model
 
