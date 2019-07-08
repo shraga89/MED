@@ -65,29 +65,30 @@ for matcher in matchers:
     mouse = MH.mouseHandler(matcher)
     for k in heatmaps:
         heatmaps[k][matcher] = mouse.exportMouseData(k)
-    curr_feat = features[matcher]
+    curr_feat = features[matcher].copy()
     temp = mouse.extract_mouse_features()
     features[matcher] = np.append(curr_feat, temp)
-    curr_feat = features[matcher]
+    curr_feat = features[matcher].copy()
+
     temp = Hmatcher.extract_behavioural_features()
     features[matcher] = np.append(curr_feat, temp)
     matches[matcher] = match
-    for i in range(conf.num_subs, min(len(conf_seqs[matcher]), conf.max_subs), conf.jumps):
-        submatchers = Hmatcher.split2ns(i, matcher)
-        submouses = mouse.split2ns(submatchers)
-        for sub in submatchers:
-            match = submatchers[sub].getMatch()
-            match_seqs[sub], conf_seqs[sub], time_seqs[sub] = submatchers[sub].getSeqs()
-            features[sub] = MF.extractPreds(evaluator.getMatrix4Match(match))
-            for k in heatmaps:
-                heatmaps[k][sub] = submouses[sub].exportMouseData(k)
-            curr_feat = features[sub]
-            temp = submouses[sub].extract_mouse_features()
-            features[sub] = np.append(curr_feat, temp)
-            curr_feat = features[matcher]
-            temp = submatchers[sub].extract_behavioural_features()
-            features[sub] = np.append(curr_feat, temp)
-            quality[sub] = evaluator.evaluate(match)
+    # for i in range(conf.num_subs, min(len(conf_seqs[matcher]), conf.max_subs), conf.jumps):
+    #     submatchers = Hmatcher.split2ns(i, matcher)
+    #     submouses = mouse.split2ns(submatchers)
+    #     for sub in submatchers:
+    #         match = submatchers[sub].getMatch()
+    #         match_seqs[sub], conf_seqs[sub], time_seqs[sub] = submatchers[sub].getSeqs()
+    #         features[sub] = MF.extractPreds(evaluator.getMatrix4Match(match))
+    #         for k in heatmaps:
+    #             heatmaps[k][sub] = submouses[sub].exportMouseData(k)
+    #         curr_feat = features[sub].copy()
+    #         temp = submouses[sub].extract_mouse_features()
+    #         features[sub] = np.append(curr_feat, temp)
+    #         curr_feat = features[matcher].copy()
+    #         temp = submatchers[sub].extract_behavioural_features()
+    #         features[sub] = np.append(curr_feat, temp)
+    #         quality[sub] = evaluator.evaluate(match)
 Y = E.quality2pandas(quality, True)
 i = 1
 ts = time.time()
@@ -210,7 +211,7 @@ for _, testset in kfold.split(matchers):
 
     # TEST:
     for matcher in np.array(Y[:])[:].copy():
-        curr_feat = features[matcher[0]]
+        curr_feat = features[matcher[0]].copy()
         temp = []
         # LSTM:
         # CONF:
