@@ -12,6 +12,7 @@ from keras import optimizers
 from keras.preprocessing.image import load_img
 import tensorflow as tf
 from keras import backend as K
+import shap
 import matplotlib.pyplot as plt
 
 vgg19 = VGG19(weights='imagenet', include_top=False, input_shape=(37, 45, 3), classes=2)
@@ -58,12 +59,11 @@ def build_pretrained_cnn():
         x = Flatten()(x)
         x = Dense(1024, activation="relu")(x)
         x = Dropout(0.5)(x)
-        x = Dense(1024, activation="relu")(x)
-        # predictions = Dense(2, activation="softmax")(x)
-        predictions = Dense(1, activation='sigmoid')(x)
+        x = Dense(512, activation="relu")(x)
+        predictions = Dense(2, activation="softmax")(x)
+        # predictions = Dense(1, activation='relu')(x)
         model = Model(inputs=vgg19.input, outputs=predictions)
-        # model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=["accuracy"])
-        model.compile(loss='mean_squared_error', optimizer='adam', metrics=["accuracy"])
+        model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=["accuracy"])
     # print(model.summary())
     return model
 
@@ -98,3 +98,14 @@ def one_hot(target, n_classes):
     targets = np.array([target]).reshape(-1).astype(int)
     one_hot_targets = np.eye(n_classes)[targets]
     return one_hot_targets
+
+
+def check_importance(X, model):
+    # DF, based on which importance is checked
+    X_importance = X
+
+    # Explain model predictions using shap library:
+    explainer = shap.TreeExplainer(model)
+    shap_values = explainer.shap_values(X_importance)
+    shap.summary_plot(shap_values, X_importance)
+    return True
