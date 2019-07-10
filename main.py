@@ -20,7 +20,7 @@ from keras.applications.vgg19 import preprocess_input
 
 os.environ['QT_QPA_PLATFORM'] = 'offscreen'
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
-config = tf.ConfigProto(device_count={'GPU': 0, 'CPU': 28})
+config = tf.ConfigProto(device_count={'GPU': 2, 'CPU': 28})
 config.gpu_options.allow_growth = True
 config.gpu_options.per_process_gpu_memory_fraction = 0.95
 sess = tf.Session(config=config)
@@ -73,22 +73,22 @@ for matcher in matchers:
     temp = Hmatcher.extract_behavioural_features()
     features[matcher] = np.append(curr_feat, temp)
     matches[matcher] = match
-    for i in range(conf.num_subs, min(len(conf_seqs[matcher]), conf.max_subs), conf.jumps):
-        submatchers = Hmatcher.split2ns(i, matcher)
-        submouses = mouse.split2ns(submatchers)
-        for sub in submatchers:
-            match = submatchers[sub].getMatch()
-            match_seqs[sub], conf_seqs[sub], time_seqs[sub] = submatchers[sub].getSeqs()
-            features[sub] = MF.extractPreds(evaluator.getMatrix4Match(match))
-            for k in heatmaps:
-                heatmaps[k][sub] = submouses[sub].exportMouseData(k)
-            curr_feat = features[sub].copy()
-            temp = submouses[sub].extract_mouse_features()
-            features[sub] = np.append(curr_feat, temp)
-            curr_feat = features[matcher].copy()
-            temp = submatchers[sub].extract_behavioural_features()
-            features[sub] = np.append(curr_feat, temp)
-            quality[sub] = evaluator.evaluate(match)
+    # for i in range(conf.num_subs, min(len(conf_seqs[matcher]), conf.max_subs), conf.jumps):
+    #     submatchers = Hmatcher.split2ns(i, matcher)
+    #     submouses = mouse.split2ns(submatchers)
+    #     for sub in submatchers:
+    #         match = submatchers[sub].getMatch()
+    #         match_seqs[sub], conf_seqs[sub], time_seqs[sub] = submatchers[sub].getSeqs()
+    #         features[sub] = MF.extractPreds(evaluator.getMatrix4Match(match))
+    #         for k in heatmaps:
+    #             heatmaps[k][sub] = submouses[sub].exportMouseData(k)
+    #         curr_feat = features[sub].copy()
+    #         temp = submouses[sub].extract_mouse_features()
+    #         features[sub] = np.append(curr_feat, temp)
+    #         curr_feat = features[matcher].copy()
+    #         temp = submatchers[sub].extract_behavioural_features()
+    #         features[sub] = np.append(curr_feat, temp)
+    #         quality[sub] = evaluator.evaluate(match)
 Y = E.quality2pandas(quality, True)
 i = 1
 ts = time.time()

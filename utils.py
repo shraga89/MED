@@ -4,8 +4,12 @@ from keras.layers import GRU, LSTM, Dense, TimeDistributed, Activation, Bidirect
     Dropout, Lambda, Reshape, Embedding, GlobalAveragePooling2D
 from keras.utils import to_categorical
 import numpy as np
-from keras.applications import VGG19
-from keras.applications.vgg19 import preprocess_input
+# from keras.applications import VGG19
+# from keras.applications.vgg19 import preprocess_input
+# from keras.applications import VGG16
+# from keras.applications.vgg16 import preprocess_input
+from keras.applications.resnet50 import ResNet50
+from keras.applications.resnet50 import preprocess_input
 from keras import models
 from keras import layers
 from keras import optimizers
@@ -15,13 +19,13 @@ from keras import backend as K
 # import shap
 import matplotlib.pyplot as plt
 
-vgg19 = VGG19(weights='imagenet', include_top=False, input_shape=(37, 45, 3), classes=2)
+pretrained = ResNet50(weights='imagenet', include_top=False, input_shape=(37, 45, 3), classes=2)
 graph = tf.get_default_graph()
 
 
 def load_vgg():
-    global vgg19
-    vgg19 = VGG19(weights='imagenet', include_top=False, input_shape=(37, 45, 3), classes=2)
+    global pretrained
+    pretrained = ResNet50(weights='imagenet', include_top=False, input_shape=(37, 45, 3), classes=2)
     global graph
     graph = tf.get_default_graph()
 
@@ -51,18 +55,18 @@ def build_lstm_regg(first):
 def build_pretrained_cnn():
     global graph
     with graph.as_default():
-        for layer in vgg19.layers[:5]:
+        for layer in pretrained.layers[:5]:
             layer.trainable = False
 
         # Adding custom Layers
-        x = vgg19.output
+        x = pretrained.output
         x = Flatten()(x)
         x = Dense(1024, activation="relu")(x)
         x = Dropout(0.5)(x)
         x = Dense(512, activation="relu")(x)
         predictions = Dense(2, activation="softmax")(x)
         # predictions = Dense(1, activation='relu')(x)
-        model = Model(inputs=vgg19.input, outputs=predictions)
+        model = Model(inputs=pretrained.input, outputs=predictions)
         model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=["accuracy"])
     # print(model.summary())
     return model
