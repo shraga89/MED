@@ -138,8 +138,8 @@ for _, testset in kfold.split(matchers):
     # TRAIN:
     for matcher in np.array(Y[['matcher', 'P', 'R', 'Res', 'Cal', 'P_bin', 'R_bin', 'Res_bin', 'Cal_bin']])[:].copy():
         consensus_seqs[matcher[0]] = U.bulid_consensus_seq(consensus, match_seqs[matcher[0]])
-        if matcher[0].split('_')[0] in test:
-            continue
+        # if matcher[0].split('_')[0] in test:
+        #     continue
         y_p = np.array(matcher[1]).reshape(1, 1)
         y_r = np.array(matcher[2]).reshape(1, 1)
         y_res = np.array(matcher[3]).reshape(1, 1)
