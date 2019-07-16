@@ -20,7 +20,7 @@ from keras.applications.resnet50 import preprocess_input
 
 os.environ['QT_QPA_PLATFORM'] = 'offscreen'
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
-config = tf.ConfigProto(device_count={'GPU': 0, 'CPU': 28})
+config = tf.ConfigProto(device_count={'GPU': 2, 'CPU': 28})
 config.gpu_options.allow_growth = True
 config.gpu_options.per_process_gpu_memory_fraction = 0.9
 sess = tf.Session(config=config)
@@ -256,7 +256,7 @@ for _, testset in kfold.split(matchers):
         temp += [float(cnn_p_RMouse.predict(x)[0][1]), float(cnn_r_RMouse.predict(x)[0][1]),
                 float(cnn_res_RMouse.predict(x)[0][1]), float(cnn_cal_RMouse.predict(x)[0][1])]
 
-        features[matcher[0]] = np.append(curr_feat, temp)
+        features[matcher[0]] = np.nan_to_num(np.append(curr_feat, temp))
 
     X = E.features2pandas(features, True)
     x_test = np.array(X[X['matcher'].isin(test)].drop('matcher', axis=1))
