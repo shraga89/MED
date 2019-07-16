@@ -20,7 +20,7 @@ from keras.applications.resnet50 import preprocess_input
 
 os.environ['QT_QPA_PLATFORM'] = 'offscreen'
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
-config = tf.ConfigProto(device_count={'GPU': 2, 'CPU': 28})
+config = tf.ConfigProto(device_count={'GPU': 1, 'CPU': 28})
 config.gpu_options.allow_growth = True
 config.gpu_options.per_process_gpu_memory_fraction = 0.9
 sess = tf.Session(config=config)
