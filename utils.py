@@ -8,8 +8,10 @@ import numpy as np
 # from keras.applications.vgg19 import preprocess_input
 # from keras.applications import VGG16
 # from keras.applications.vgg16 import preprocess_input
-from keras.applications.resnet50 import ResNet50
-from keras.applications.resnet50 import preprocess_input
+# from keras.applications.resnet50 import ResNet50
+# from keras.applications.resnet50 import preprocess_input
+from keras.applications.mobilenet_v2 import MobileNetV2
+from keras.applications.mobilenet_v2 import preprocess_input
 from keras import models
 from keras import layers
 from keras import optimizers
@@ -19,7 +21,7 @@ from keras import backend as K
 # import shap
 import matplotlib.pyplot as plt
 
-pretrained = ResNet50(weights='imagenet', include_top=False, input_shape=(37, 45, 3), classes=2)
+pretrained = MobileNetV2(weights='imagenet', include_top=False, input_shape=(37, 45, 3), classes=2)
 graph = tf.get_default_graph()
 
 
