@@ -89,6 +89,7 @@ for matcher in matchers:
             temp = submatchers[sub].extract_behavioural_features()
             features[sub] = np.append(curr_feat, temp)
             quality[sub] = evaluator.evaluate(match)
+            break
 Y = E.quality2pandas(quality, True)
 i = 1
 ts = time.time()
