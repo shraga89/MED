@@ -43,7 +43,8 @@ def features2pandas(features, export=False):
     for m in features:
         print(m)
         print(list(features[m]))
-        df.loc[i] = np.array([m, ] + list(features[m]))
+        print(np.array([str(m), ] + list(features[m])))
+        df.loc[i] = np.array([str(m), ] + list(features[m]))
         i += 1
     if export:
         df.sort_values(by='matcher', ascending=True).to_csv('./features.csv', index=False)
