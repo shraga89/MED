@@ -69,7 +69,6 @@ for matcher in matchers:
     temp = mouse.extract_mouse_features()
     features[matcher] = np.append(curr_feat, temp)
     curr_feat = features[matcher].copy()
-
     temp = Hmatcher.extract_behavioural_features()
     features[matcher] = np.append(curr_feat, temp)
     matches[matcher] = match
@@ -85,11 +84,10 @@ for matcher in matchers:
             curr_feat = features[sub].copy()
             temp = submouses[sub].extract_mouse_features()
             features[sub] = np.append(curr_feat, temp)
-            curr_feat = features[matcher].copy()
+            curr_feat = features[sub].copy()
             temp = submatchers[sub].extract_behavioural_features()
             features[sub] = np.append(curr_feat, temp)
             quality[sub] = evaluator.evaluate(match)
-            break
 Y = E.quality2pandas(quality, True)
 i = 1
 ts = time.time()

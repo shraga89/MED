@@ -41,9 +41,6 @@ def features2pandas(features, export=False):
     df = pd.DataFrame(columns=cols)
     i = 1
     for m in features:
-        print(m)
-        print(list(features[m]))
-        print(np.array([str(m), ] + list(features[m])))
         df.loc[i] = np.array([str(m), ] + list(features[m]))
         i += 1
     if export:
