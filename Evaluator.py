@@ -40,9 +40,9 @@ def features2pandas(features, export=False):
     cols = ['matcher'] + [str(i) for i in range(len(list(features[k])))]
     df = pd.DataFrame(columns=cols)
     i = 1
-    print(len(features))
     for m in features:
         print(m)
+        print(list(features[m]))
         df.loc[i] = np.array([m, ] + list(features[m]))
         i += 1
     if export:
