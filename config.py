@@ -5,5 +5,5 @@ epochs = 5
 folds = 5
 # folds = 2
 num_subs = 50
-max_subs = 51
+max_subs = 71
 jumps = 10
