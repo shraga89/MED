@@ -21,16 +21,19 @@ class HHandler:
         with open(self.dir + 'ExperimentData/' + self.matcherId + '/Excel - CIDX/report.log') as f:
             for line in f.readlines():
                 last_line_split = line_split
-                line_split = line.replace('"','').split('|')
+                # line_split = line.split('|')
+                line_split = line.split('|')
                 time = datetime.strptime(line_split[0].split(',')[0], '%Y-%m-%d %H:%M:%S')
                 if len(line_split) < 5:
                     continue
                 if line_split[4] != 'matched':
                     continue
                 if len(last_line_split) < 5 or last_line_split[4] != 'matched':
-                    last_ai = last_line_split[-1].replace('\n', '')
+                    # last_ai = last_line_split[-1].replace('\n', '')
+                    last_ai = last_line_split[-1].replace('\n', '').split('.')[-1].replace('"','').replace('@en', '')
                     last_time = datetime.strptime(last_line_split[0].split(',')[0], '%Y-%m-%d %H:%M:%S')
-                corr = tuple((last_ai, line_split[8]))
+                # corr = tuple((last_ai, line_split[8]))
+                corr = tuple((last_ai, line_split[8].split('.')[-1].replace('"','').replace('@en', '')))
                 elapsed_time = float((time - last_time).seconds)
                 if corr not in self.H:
                     self.H[corr] = []
