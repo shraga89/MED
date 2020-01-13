@@ -106,7 +106,8 @@ class Evaluator:
         self.createMatrixShell()
 
     def loadExact(self):
-        with open(conf.dir + 'Excel2CIDX.csv') as f:
+        # with open(conf.dir + 'Excel2CIDX.csv') as f:
+        with open(conf.dir + 'onto2onto.csv') as f:
             for line in f.readlines():
                 line_split = line.replace(' ', '').split(',')
                 self.exact += [tuple((line_split[1], line_split[0])), ]
@@ -114,7 +115,8 @@ class Evaluator:
     def createMatrixShell(self):
         last = None
         i, j = -1, 0
-        with open(conf.dir + 'Matrix.csv') as f:
+        # with open(conf.dir + 'Matrix.csv') as f:
+        with open(conf.dir + 'Matrix_onto.csv') as f:
             for line in f.readlines():
                 line_split = line.replace(' ', '').split(',')
                 if 'instance' in line_split[0]:
