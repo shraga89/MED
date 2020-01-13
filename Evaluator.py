@@ -130,7 +130,7 @@ class Evaluator:
         self.emptyMatrix = np.zeros([i+1, j+1], dtype=float)
 
     def cor2entry(self, cor):
-        return self.correspondences[cor]
+        return self.correspondences[cor.replace('\"', '')]
 
     def getMatrix4Match(self, match):
         matrix = np.copy(self.emptyMatrix)
