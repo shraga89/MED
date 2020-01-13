@@ -21,7 +21,7 @@ class HHandler:
         with open(self.dir + 'ExperimentData/' + self.matcherId + '/Excel - CIDX/report.log') as f:
             for line in f.readlines():
                 last_line_split = line_split
-                line_split = line.strip('"').split('|')
+                line_split = line.replace('"','').split('|')
                 time = datetime.strptime(line_split[0].split(',')[0], '%Y-%m-%d %H:%M:%S')
                 if len(line_split) < 5:
                     continue
