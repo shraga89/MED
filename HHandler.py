@@ -33,7 +33,10 @@ class HHandler:
                     last_ai = last_line_split[-1].replace('\n', '').split('.')[-1].replace('"','').replace('@en', '')
                     last_time = datetime.strptime(last_line_split[0].split(',')[0], '%Y-%m-%d %H:%M:%S')
                 # corr = tuple((last_ai, line_split[8]))
-                corr = tuple((last_ai, line_split[8].split('.')[-1].replace('"','').replace('@en', '')))
+                curr_ai = line_split[8].split('.')[-1].replace('"', '').replace('@en', '').split()
+                curr_ai[-1] = curr_ai[-1].title()
+                curr_ai = ''.join(curr_ai)
+                corr = tuple((last_ai, curr_ai))
                 elapsed_time = float((time - last_time).seconds)
                 if corr not in self.H:
                     self.H[corr] = []
