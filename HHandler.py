@@ -30,14 +30,11 @@ class HHandler:
                     continue
                 if len(last_line_split) < 5 or last_line_split[4] != 'matched':
                     # last_ai = last_line_split[-1].replace('\n', '')
-                    last_ai = last_line_split[-1].replace('\n', '').split('.')[-1].replace('"','').replace('@en', '').split()
-                    last_ai[-1] = last_ai[-1].title()
-                    last_ai = ''.join(last_ai)
+                    last_ai = last_line_split[-1].replace('\n', '').split('.')[-1].replace('"','').replace('@en', '')\
+                        .replace(' ', '').lower()
                     last_time = datetime.strptime(last_line_split[0].split(',')[0], '%Y-%m-%d %H:%M:%S')
                 # corr = tuple((last_ai, line_split[8]))
-                curr_ai = line_split[8].split('.')[-1].replace('"', '').replace('@en', '').split()
-                curr_ai[-1] = curr_ai[-1].title()
-                curr_ai = ''.join(curr_ai)
+                curr_ai = line_split[8].split('.')[-1].replace('"', '').replace('@en', '').replace(' ', '').lower()
                 corr = tuple((last_ai, curr_ai))
                 elapsed_time = float((time - last_time).seconds)
                 if corr not in self.H:
