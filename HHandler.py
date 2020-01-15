@@ -44,7 +44,8 @@ class HHandler:
                     print('err1', last_line_split[-1].replace('\n', '').split('.'))
                     continue
                 if curr_ai == '':
-                    print('err2', line_split[-1].replace('\n', '').split('.'))
+                    print('err2', line_split[8].replace('\n', '').split('.'))
+                    print('err2', line_split[-2].replace('\n', '').split('.'))
                     continue
                 elapsed_time = float((time - last_time).seconds)
                 if corr not in self.H:
