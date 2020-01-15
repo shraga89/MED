@@ -35,7 +35,8 @@ class mouseHandler:
     def processMouseData(self):
         last_line = None
         try:
-            with open(str(self.dir + 'ExperimentData/' + self.matcherId + '/Excel - CIDX/2.rms')) as f:
+            # with open(str(self.dir + 'ExperimentData/' + self.matcherId + '/Excel - CIDX/2.rms')) as f:
+            with open(str(self.dir + 'ExperimentData/' + self.matcherId + '/Excel - CIDX/exam.rms')) as f:
                 for line in f.readlines():
                     line.replace('{', '').replace('}', '').split()
                     action, value = line.replace('{', '').replace('}', '').split()[:2]
