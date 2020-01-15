@@ -40,7 +40,7 @@ class HHandler:
                     print(last_line_split[-1].replace('\n', '').split('.')[-1])
                     continue
                 if curr_ai == '':
-                    print(curr_ai[-1].replace('\n', '').split('.')[-1])
+                    print(line_split[-1].replace('\n', '').split('.'))
                     continue
                 elapsed_time = float((time - last_time).seconds)
                 if corr not in self.H:
