@@ -138,7 +138,6 @@ class Evaluator:
         for cor in match:
             print(cor)
             print(self.correspondences)
-            print(self.correspondences[cor])
             matrix[self.cor2entry(cor[0])] = cor[1]
         return matrix
 
