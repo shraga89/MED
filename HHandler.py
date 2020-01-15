@@ -37,10 +37,10 @@ class HHandler:
                 curr_ai = line_split[8].split('.')[-1].replace('"', '').replace('@en', '').replace(' ', '').lower()
                 corr = tuple((last_ai, curr_ai))
                 if last_ai == '':
-                    print(last_line_split[-1].replace('\n', '').split('.')[-1])
+                    print('err', last_line_split[-1].replace('\n', '').split('.'))
                     continue
                 if curr_ai == '':
-                    print(line_split[-1].replace('\n', '').split('.'))
+                    print('err', line_split[-1].replace('\n', '').split('.'))
                     continue
                 elapsed_time = float((time - last_time).seconds)
                 if corr not in self.H:
