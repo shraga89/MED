@@ -134,6 +134,10 @@ class Evaluator:
 
     def getMatrix4Match(self, match):
         matrix = np.copy(self.emptyMatrix)
+        print(self.cor2entry)
+        print(matrix)
+        print(matrix.shape)
+        print(match)
         for cor in match:
             matrix[self.cor2entry(cor[0])] = cor[1]
         return matrix
