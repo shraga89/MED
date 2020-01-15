@@ -41,10 +41,10 @@ class HHandler:
                     continue
                 corr = tuple((last_ai, curr_ai))
                 if last_ai == '':
-                    print('err', last_line_split[-1].replace('\n', '').split('.'))
+                    print('err1', last_line_split[-1].replace('\n', '').split('.'))
                     continue
                 if curr_ai == '':
-                    print('err', line_split[-1].replace('\n', '').split('.'))
+                    print('err2', line_split[-1].replace('\n', '').split('.'))
                     continue
                 elapsed_time = float((time - last_time).seconds)
                 if corr not in self.H:
