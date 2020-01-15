@@ -36,6 +36,12 @@ class HHandler:
                 # corr = tuple((last_ai, line_split[8]))
                 curr_ai = line_split[8].split('.')[-1].replace('"', '').replace('@en', '').replace(' ', '').lower()
                 corr = tuple((last_ai, curr_ai))
+                if last_ai == '':
+                    print(last_line_split[-1].replace('\n', '').split('.')[-1])
+                    continue
+                if curr_ai == '':
+                    print(curr_ai[-1].replace('\n', '').split('.')[-1])
+                    continue
                 elapsed_time = float((time - last_time).seconds)
                 if corr not in self.H:
                     self.H[corr] = []
