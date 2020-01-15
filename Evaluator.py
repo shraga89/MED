@@ -123,10 +123,10 @@ class Evaluator:
                     continue
                 if last != line_split[2]:
                     i += 1
-                    print(j)
                     j = 0
                     last = line_split[2]
                 self.correspondences[tuple((line_split[3], line_split[2]))] = (i, j)
+                print(i,j)
                 j += 1
         self.emptyMatrix = np.zeros([i+1, j+1], dtype=float)
 
