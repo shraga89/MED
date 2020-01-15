@@ -36,6 +36,8 @@ class HHandler:
                 curr_ai = line_split[8].split('.')[-1].replace('"', '').replace('@en', '').replace(' ', '').lower()
                 if 'name of an entity' in line_split[8]:
                     curr_ai = line_split[8].split('.')[-2].replace('"', '').replace('@en', '').replace(' ', '').lower()
+                elif 'foaf:name' in line_split[8]:
+                    continue
                 # elif '@en' in line_split[-2]:
                 #     curr_ai = line_split[-2].split('.')[-1].replace('"', '').replace('@en', '').replace(' ', '').lower()
                 # else:
