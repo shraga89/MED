@@ -55,7 +55,7 @@ kfold = KFold(conf.folds, True, 1)
 for matcher in matchers:
     if matcher_count >= matcher_number:
         break
-    if matcher == '248':
+    if matcher in ['248','242]':
         continue
     matcher_count += 1
     print('Matcher Number', matcher)
