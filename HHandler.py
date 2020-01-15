@@ -33,12 +33,13 @@ class HHandler:
                         .replace(' ', '').lower()
                     last_time = datetime.strptime(last_line_split[0].split(',')[0], '%Y-%m-%d %H:%M:%S')
                 # corr = tuple((last_ai, line_split[8]))
-                if '@en' in line_split[8]:
-                    curr_ai = line_split[8].split('.')[-1].replace('"', '').replace('@en', '').replace(' ', '').lower()
-                elif '@en' in line_split[-2]:
-                    curr_ai = line_split[-2].split('.')[-1].replace('"', '').replace('@en', '').replace(' ', '').lower()
-                else:
-                    continue
+                curr_ai = line_split[8].split('.')[-2].replace('"', '').replace('@en', '').replace(' ', '').lower()
+                if 'name of an entity' in line_split[8]:
+                    curr_ai = line_split[8].split('.')[-2].replace('"', '').replace('@en', '').replace(' ', '').lower()
+                # elif '@en' in line_split[-2]:
+                #     curr_ai = line_split[-2].split('.')[-1].replace('"', '').replace('@en', '').replace(' ', '').lower()
+                # else:
+                #     continue
                 corr = tuple((last_ai, curr_ai))
                 if last_ai == '':
                     print('err1', last_line_split[-1].replace('\n', '').split('.'))
