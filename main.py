@@ -29,12 +29,12 @@ keras.backend.set_session(sess)
 matchers = listdir(str(conf.dir + 'ExperimentData/'))
 print('found ', len(matchers), ' matchers')
 matchers_ids = dict(enumerate(matchers))
-# for matcher in matchers:
-#     test = MH.mouseHandler(matcher)
-#     test.exportMouseData('LMouse')
-#     test.exportMouseData('RMouse')
-#     test.exportMouseData('WMouse')
-#     test.exportMouseData('Move')
+for matcher in matchers:
+    test = MH.mouseHandler(matcher)
+    test.exportMouseData('LMouse')
+    test.exportMouseData('RMouse')
+    test.exportMouseData('WMouse')
+    test.exportMouseData('Move')
 
 # SHAP to analyze features
 

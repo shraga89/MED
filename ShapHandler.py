@@ -15,4 +15,4 @@ def check_importance(X_train, Y_train, X_test, model, Y_type, name, featureset, 
     plt.xlabel('Importance')
     plt.savefig('./feature figs/' + Y_type + '_' + name + '_' + str(fold) + '_' + featureset + '.jpg', bbox_inches='tight', format='jpg')
     plt.clf()
-    # plt.savefig(name + '.jpg')
+    plt.savefig(name + '.jpg')
