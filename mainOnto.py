@@ -74,7 +74,7 @@ X_test = X_test.iloc[10:]
 names = ["Nearest Neighbors", "Linear SVM", "RBF SVM", "Gaussian Process",
          "Decision Tree", "Random Forest", "Neural Net", "AdaBoost",
          "Naive Bayes"]
-# names = ["AdaBoost"]
+names = ["Random Forest"]
 
 clfs = [
     KNeighborsClassifier(3),
@@ -86,7 +86,7 @@ clfs = [
     MLPClassifier(alpha=1, max_iter=1000),
     AdaBoostClassifier(),
     GaussianNB()]
-# clfs = [AdaBoostClassifier()]
+clfs = [RandomForestRegressor(max_depth=6, random_state=0, n_estimators=10)]
 
 classifiers = list(zip(names, clfs))
 res = None

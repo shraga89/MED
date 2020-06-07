@@ -16,7 +16,7 @@ from sklearn.svm import SVC
 from sklearn.gaussian_process import GaussianProcessClassifier
 from sklearn.gaussian_process.kernels import RBF
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
+from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier, RandomForestRegressor
 from sklearn.naive_bayes import GaussianNB
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
 import matplotlib.pyplot as plt
@@ -64,7 +64,7 @@ X.columns = ['matcher', ] + [feature_mapping[int(item)] for item in list(X.colum
 names = ["Nearest Neighbors", "Linear SVM", "RBF SVM", "Gaussian Process",
          "Decision Tree", "Random Forest", "Neural Net", "AdaBoost",
          "Naive Bayes"]
-names = ["AdaBoost"]
+names = ["Random Forest"]
 
 clfs = [
     KNeighborsClassifier(3),
@@ -76,7 +76,7 @@ clfs = [
     MLPClassifier(alpha=1, max_iter=1000),
     AdaBoostClassifier(),
     GaussianNB()]
-clfs = [AdaBoostClassifier()]
+clfs = [RandomForestRegressor(max_depth=5, n_estimators=10, max_features=1)]
 
 classifiers = list(zip(names, clfs))
 res = None
@@ -97,23 +97,32 @@ for _, test in kfold.split(matchers):
     x_test = np.array(X_test)
     x_train = np.array(X_train)
     # predictions = Y[Y['matcher'].isin(testset)][['matcher', 'P_bin', 'R_bin', 'Res_bin', 'Cal_bin']]
-    predictions = Y[Y['matcher'].str.startswith(test_prefixes)][['matcher', 'P_bin', 'R_bin', 'Res_bin', 'Cal_bin']]
+    # predictions = Y[Y['matcher'].str.startswith(test_prefixes)][['matcher', 'P_bin', 'R_bin', 'Res_bin', 'Cal_bin']]
+    predictions = Y[Y['matcher'].str.startswith(test_prefixes)][['matcher', 'P', 'R', 'Res', 'Cal']]
     # yP_train = np.array(Y[~Y['matcher'].isin(testset)]['P_bin'])
     # yR_train = np.array(Y[~Y['matcher'].isin(testset)]['R_bin'])
     # yRes_train = np.array(Y[~Y['matcher'].isin(testset)]['Res_bin'])
     # yCal_train = np.array(Y[~Y['matcher'].isin(testset)]['Cal_bin'])
-    yP_train = np.array(Y[Y['matcher'].str.startswith(train_prefixes)]['P_bin'])
-    yR_train = np.array(Y[Y['matcher'].str.startswith(train_prefixes)]['R_bin'])
-    yRes_train = np.array(Y[Y['matcher'].str.startswith(train_prefixes)]['Res_bin'])
-    yCal_train = np.array(Y[Y['matcher'].str.startswith(train_prefixes)]['Cal_bin'])
+    # yP_train = np.array(Y[Y['matcher'].str.startswith(train_prefixes)]['P_bin'])
+    # yR_train = np.array(Y[Y['matcher'].str.startswith(train_prefixes)]['R_bin'])
+    # yRes_train = np.array(Y[Y['matcher'].str.startswith(train_prefixes)]['Res_bin'])
+    # yCal_train = np.array(Y[Y['matcher'].str.startswith(train_prefixes)]['Cal_bin'])
+    yP_train = np.array(Y[Y['matcher'].str.startswith(train_prefixes)]['P'])
+    yR_train = np.array(Y[Y['matcher'].str.startswith(train_prefixes)]['R'])
+    yRes_train = np.array(Y[Y['matcher'].str.startswith(train_prefixes)]['Res'])
+    yCal_train = np.array(Y[Y['matcher'].str.startswith(train_prefixes)]['Cal'])
     # yP_test = np.array(Y[Y['matcher'].isin(testset)]['P_bin'])
     # yR_test = np.array(Y[Y['matcher'].isin(testset)]['R_bin'])
     # yRes_test = np.array(Y[Y['matcher'].isin(testset)]['Res_bin'])
     # yCal_test = np.array(Y[Y['matcher'].isin(testset)]['Cal_bin'])
-    yP_test = np.array(Y[Y['matcher'].str.startswith(test_prefixes)]['P_bin'])
-    yR_test = np.array(Y[Y['matcher'].str.startswith(test_prefixes)]['R_bin'])
-    yRes_test = np.array(Y[Y['matcher'].str.startswith(test_prefixes)]['Res_bin'])
-    yCal_test = np.array(Y[Y['matcher'].str.startswith(test_prefixes)]['Cal_bin'])
+    # yP_test = np.array(Y[Y['matcher'].str.startswith(test_prefixes)]['P_bin'])
+    # yR_test = np.array(Y[Y['matcher'].str.startswith(test_prefixes)]['R_bin'])
+    # yRes_test = np.array(Y[Y['matcher'].str.startswith(test_prefixes)]['Res_bin'])
+    # yCal_test = np.array(Y[Y['matcher'].str.startswith(test_prefixes)]['Cal_bin'])
+    yP_test = np.array(Y[Y['matcher'].str.startswith(test_prefixes)]['P'])
+    yR_test = np.array(Y[Y['matcher'].str.startswith(test_prefixes)]['R'])
+    yRes_test = np.array(Y[Y['matcher'].str.startswith(test_prefixes)]['Res'])
+    yCal_test = np.array(Y[Y['matcher'].str.startswith(test_prefixes)]['Cal'])
     print('Starting fold number: ' + str(i))
 
     for clf_name, clf in classifiers:
@@ -148,11 +157,12 @@ for _, test in kfold.split(matchers):
     res = pd.concat([res, predictions], ignore_index=True).drop_duplicates().reset_index(drop=True)
     i += 1
 
-res.sort_values(by='matcher', ascending=True).to_csv(folder + '/classification_results.csv', index=False)
+# res.sort_values(by='matcher', ascending=True).to_csv(folder + '/classification_results.csv', index=False)
 sums = E.summerize_results(res, classifiers)
-sums.sort_values(by=['Q', 'Acc'], ascending=True).to_csv(folder + '/classification_evaluation.csv', index=False)
-exit()
-for q in ['P_bin', 'R_bin', 'Res_bin', 'Cal_bin']:
+# sums.sort_values(by=['Q', 'Acc'], ascending=True).to_csv(folder + '/classification_evaluation.csv', index=False)
+
+# for q in ['P_bin', 'R_bin', 'Res_bin', 'Cal_bin']:
+for q in ['P', 'R', 'Res', 'Cal']:
     print('Ablation test for ' + q)
     i = 1
     sumQ = sums[sums['Q'] == q]
@@ -190,8 +200,8 @@ for q in ['P_bin', 'R_bin', 'Res_bin', 'Cal_bin']:
         predictions[best_clf + '_without_' + subset_prefix] = preds
         # feat_res = pd.concat([feat_res, predictions], ignore_index=True).drop_duplicates().reset_index(drop=True)
         feat_ablation.loc[i] = np.array([best_clf + '_without_' + subset_prefix, E.eval_model(preds, reals)])
-        predictions.sort_values(by='matcher', ascending=True).to_csv(folder + q + '_without_' + subset_prefix + "_classification_results_abl.csv",
-                                                                  index=False)
+        # predictions.sort_values(by='matcher', ascending=True).to_csv(folder + q + '_without_' + subset_prefix + "_classification_results_abl.csv",
+        #                                                           index=False)
         i += 1
     for subset_prefix in ['Matrix', 'Mouse', 'Behavioural', 'Sequential', 'Spatial']:
         print('Maintaining only ' + subset_prefix + ' features')
@@ -220,8 +230,8 @@ for q in ['P_bin', 'R_bin', 'Res_bin', 'Cal_bin']:
         predictions = Y[~Y['matcher'].str.contains('_')][['matcher', q]]
         predictions[best_clf + '_with_' + subset_prefix] = preds
         # feat_res = pd.concat([feat_res, predictions], ignore_index=True).drop_duplicates().reset_index(drop=True)
-        predictions.sort_values(by='matcher', ascending=True).to_csv(folder + q + '_with_' + subset_prefix + "_classification_results_abl.csv",
-                                                                  index=False)
+        # predictions.sort_values(by='matcher', ascending=True).to_csv(folder + q + '_with_' + subset_prefix + "_classification_results_abl.csv",
+        #                                                           index=False)
         i += 1
-    feat_ablation.sort_values(by=['Acc'],
-                              ascending=True).to_csv(folder + '/' + q + '_ablation_evaluation.csv', index=False)
+    # feat_ablation.sort_values(by=['Acc'],
+    #                           ascending=True).to_csv(folder + '/' + q + '_ablation_evaluation.csv', index=False)
