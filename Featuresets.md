@@ -47,10 +47,10 @@
 | <img src="https://render.githubusercontent.com/render/math?math=\Phi_{Spa}">\_RMouse (">P, R, Res, Cal">)    |                 <img src="https://render.githubusercontent.com/render/math?math=\|C\|">-size vector of CNN predictions over <img src="https://render.githubusercontent.com/render/math?math=P_{r}">                |
 
 **References:**  
-[1] Sagi, Tomer, and Avigdor Gal. "Schema matching prediction with applications to data source discovery and dynamic ensembling." The VLDB Journal 22.5 (2013): 689-710.
-[2] Gal, Avigdor, Haggai Roitman, and Roee Shraga. "Learning to rerank schema matches." IEEE Transactions on Knowledge and Data Engineering (2019).
-[3] Gal, Avigdor, Haggai Roitman, and Tomer Sagi. "From diversity-based prediction to better ontology & schema matching." Proceedings of the 25th International Conference on World Wide Web. 2016.
-[4] Mao, Chengying. "Towards a data complexity metric set for web service composition." 2011 IEEE 11th International Conference on Computer and Information Technology. IEEE, 2011.
-[5] Rzeszotarski, Jeffrey M., and Aniket Kittur. "Instrumenting the crowd: using implicit behavioral measures to predict task performance." Proceedings of the 24th annual ACM symposium on User interface software and technology. 2011.
-[6] Goyal, Tanya, et al. "Your behavior signals your reliability: Modeling crowd behavioral traces to ensure quality relevance annotations." Sixth AAAI Conference on Human Computation and Crowdsourcing. 2018.
-[7] Wu, Y. Wayne, and Brian P. Bailey. "Novices Who Focused or Experts Who Didn't?." Proceedings of the 2016 CHI Conference on Human Factors in Computing Systems. 2016.
+[1] Sagi, Tomer, and Avigdor Gal. "Schema matching prediction with applications to data source discovery and dynamic ensembling." The VLDB Journal 22.5 (2013): 689-710.  
+[2] Gal, Avigdor, Haggai Roitman, and Roee Shraga. "Learning to rerank schema matches." IEEE Transactions on Knowledge and Data Engineering (2019).  
+[3] Gal, Avigdor, Haggai Roitman, and Tomer Sagi. "From diversity-based prediction to better ontology & schema matching." Proceedings of the 25th International Conference on World Wide Web. 2016.  
+[4] Mao, Chengying. "Towards a data complexity metric set for web service composition." 2011 IEEE 11th International Conference on Computer and Information Technology. IEEE, 2011.  
+[5] Rzeszotarski, Jeffrey M., and Aniket Kittur. "Instrumenting the crowd: using implicit behavioral measures to predict task performance." Proceedings of the 24th annual ACM symposium on User interface software and technology. 2011.  
+[6] Goyal, Tanya, et al. "Your behavior signals your reliability: Modeling crowd behavioral traces to ensure quality relevance annotations." Sixth AAAI Conference on Human Computation and Crowdsourcing. 2018.  
+[7] Wu, Y. Wayne, and Brian P. Bailey. "Novices Who Focused or Experts Who Didn't?." Proceedings of the 2016 CHI Conference on Human Factors in Computing Systems. 2016.  
